@@ -11,9 +11,10 @@ const profileDescription = document.querySelector('.profile__description');
 const popupEdit = document.querySelector('.popup_type_edit');
 const popupNewCard = document.querySelector('.popup_type_new-card');
 const popupImage = document.querySelector('.popup_type_image');
+const image = popupImage.querySelector('.popup__image');
+const caption = popupImage.querySelector('.popup__caption');
 const formEdit = popupEdit.querySelector('form');
 const formNewCard = popupNewCard.querySelector('form');
-
 
 // кнопки
 const profileEditButtonOpen = document.querySelector('.profile__edit-button');
@@ -22,10 +23,6 @@ const profileEditButtonClose = popupEdit.querySelector('.popup__close');
 const profileAddButtonClose = popupNewCard.querySelector('.popup__close');
 const popupImageButtonClose = popupImage.querySelector('.popup__close');
 
-// @todo: Темплейт карточки
-const cardTemplate = document.querySelector('#card-template').content;
-
-// @todo: DOM узлы
 const cardContainer = document.querySelector('.places__list');
 
 //отображение карточек
@@ -81,8 +78,6 @@ function addNewCard(card){
   
 
 function handleImageClick(evt){
-    const image = popupImage.querySelector('.popup__image');
-    const caption = popupImage.querySelector('.popup__caption');
     image.src = evt.target.src;
     image.alt = evt.target.alt;
     caption.textContent = evt.target.parentElement.querySelector(".card__title").textContent;
