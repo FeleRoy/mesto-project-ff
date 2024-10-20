@@ -1,7 +1,6 @@
 import './pages/index.css'; 
-import { displayCards } from './scripts/components/card';
+import { displayCards, createCard, addNewCard, deleteCard, likeCard, handleImageClick } from './scripts/components/card';
 import { openModal, closeModal, closeByEsc, closeByOverlay } from './scripts/components/modal';
-import { editProfileFormSubmit, handleFormNewCard } from './scripts/components/form';
 
 //данные профиля
 export const profileTitle = document.querySelector('.profile__title');
@@ -57,3 +56,23 @@ popupImageButtonClose.addEventListener('click', function(){
 //обработка форм
 formEdit.addEventListener('submit', editProfileFormSubmit);
 formNewCard.addEventListener('submit', handleFormNewCard);
+
+// Обработчик «отправки» формы, хотя пока
+// она никуда отправляться не будет
+function editProfileFormSubmit(evt) {
+    evt.preventDefault(); 
+    profileTitle.textContent = formEdit.name.value;
+    profileDescription.textContent = formEdit.description.value;
+    closeModal(popupEdit);
+}
+
+//Обработчик создания новой карточки
+function handleFormNewCard(evt){
+    evt.preventDefault();
+    const newCardInfo = {name: formNewCard['place-name'].value, link: formNewCard.link.value};
+    const newCard = createCard(newCardInfo, deleteCard, likeCard, handleImageClick);
+    addNewCard(newCard);
+    formNewCard['place-name'].value = '';
+    formNewCard.link.value = '';
+    closeModal(popupNewCard);
+}
