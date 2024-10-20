@@ -4,15 +4,15 @@ import { createCard, deleteCard, likeCard} from './scripts/components/card';
 import { openModal, closeModal} from './scripts/components/modal';
 
 //данные профиля
-export const profileTitle = document.querySelector('.profile__title');
-export const profileDescription = document.querySelector('.profile__description');
+const profileTitle = document.querySelector('.profile__title');
+const profileDescription = document.querySelector('.profile__description');
 
 //модальные окна
-export const popupEdit = document.querySelector('.popup_type_edit');
-export const popupNewCard = document.querySelector('.popup_type_new-card');
-export const popupImage = document.querySelector('.popup_type_image');
-export const formEdit = popupEdit.querySelector('form');
-export const formNewCard = popupNewCard.querySelector('form');
+const popupEdit = document.querySelector('.popup_type_edit');
+const popupNewCard = document.querySelector('.popup_type_new-card');
+const popupImage = document.querySelector('.popup_type_image');
+const formEdit = popupEdit.querySelector('form');
+const formNewCard = popupNewCard.querySelector('form');
 
 
 // кнопки
