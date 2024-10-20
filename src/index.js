@@ -26,4 +26,15 @@ profileAddButtonClose.addEventListener('click', function(){
     closeModal(popupNewCard);
 });
 
+document.addEventListener('keydown', function(evt){
+    const popup = document.querySelector('.popup_is-opened');
+    if (evt.key === "Escape"){
+        closeModal(popup);
+    }
+})
 
+document.addEventListener('click', function(evt){
+    if(evt.target.classList.contains('popup')) {
+        closeModal(evt.target);
+    }
+});
