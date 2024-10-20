@@ -32,7 +32,7 @@ const cardTemplate = document.querySelector('#card-template').content;
 const cardContainer = document.querySelector('.places__list');
 
 // @todo: Функция создания карточки
-function createCard(item, delFunction){
+export function createCard(item, delFunction){
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
     const deleteButton = cardElement.querySelector('.card__delete-button');
     const cardImage = cardElement.querySelector(".card__image");
@@ -44,9 +44,13 @@ function createCard(item, delFunction){
 }
 
 // @todo: Функция удаления карточки
-function deleteCard(evt) {
+export function deleteCard(evt) {
     const listItem = evt.target.closest('.places__item');
     listItem.remove();
+}
+
+export function addNewCard(card){
+  cardContainer.prepend(card);
 }
 
 
