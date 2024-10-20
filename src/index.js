@@ -25,6 +25,44 @@ const popupImageButtonClose = popupImage.querySelector('.popup__close');
 
 const cardContainer = document.querySelector('.places__list');
 
+// Обработчик «отправки» формы, хотя пока
+// она никуда отправляться не будет
+function handleFormProfileEdit(evt) {
+    evt.preventDefault(); 
+    profileTitle.textContent = formEdit.name.value;
+    profileDescription.textContent = formEdit.description.value;
+    closeModal(popupEdit);
+}
+
+//Обработчик создания новой карточки
+function handleFormNewCard(evt){
+    evt.preventDefault();
+    const newCardInfo = {name: formNewCard['place-name'].value, link: formNewCard.link.value};
+    const newCard = createCard(newCardInfo, deleteCard, likeCard, handleImageClick);
+    addNewCard(newCard);
+    formNewCard['place-name'].value = '';
+    formNewCard.link.value = '';
+    closeModal(popupNewCard);
+}
+
+function addNewCard(card){
+    cardContainer.prepend(card);
+}
+  
+function handleImageClick(evt){
+    image.src = evt.target.src;
+    image.alt = evt.target.alt;
+    caption.textContent = evt.target.parentElement.querySelector(".card__title").textContent;
+    openModal(popupImage);
+}
+  
+  // @todo: Вывести карточки на страницу
+function displayCards(){
+    initialCards.forEach(function (item) {
+        cardContainer.append(createCard(item, deleteCard, likeCard, handleImageClick));
+    })
+}
+
 //отображение карточек
 displayCards();
 
@@ -50,43 +88,3 @@ popupImageButtonClose.addEventListener('click', function(){
 //обработка форм
 formEdit.addEventListener('submit', handleFormProfileEdit);
 formNewCard.addEventListener('submit', handleFormNewCard);
-
-// Обработчик «отправки» формы, хотя пока
-// она никуда отправляться не будет
-function handleFormProfileEdit(evt) {
-    evt.preventDefault(); 
-    profileTitle.textContent = formEdit.name.value;
-    profileDescription.textContent = formEdit.description.value;
-    closeModal(popupEdit);
-}
-
-//Обработчик создания новой карточки
-function handleFormNewCard(evt){
-    evt.preventDefault();
-    const newCardInfo = {name: formNewCard['place-name'].value, link: formNewCard.link.value};
-    const newCard = createCard(newCardInfo, deleteCard, likeCard, handleImageClick);
-    addNewCard(newCard);
-    formNewCard['place-name'].value = '';
-    formNewCard.link.value = '';
-    closeModal(popupNewCard);
-}
-
-
-function addNewCard(card){
-    cardContainer.prepend(card);
-}
-  
-
-function handleImageClick(evt){
-    image.src = evt.target.src;
-    image.alt = evt.target.alt;
-    caption.textContent = evt.target.parentElement.querySelector(".card__title").textContent;
-    openModal(popupImage);
-}
-  
-  // @todo: Вывести карточки на страницу
-function displayCards(){
-    initialCards.forEach(function (item) {
-        cardContainer.append(createCard(item, deleteCard, likeCard, handleImageClick));
-    })
-}
