@@ -39,7 +39,6 @@ export function addNewCard(card){
 }
 
 export function handleImageClick(evt){
-  console.log(evt.target.parentElement);
   const image = popupImage.querySelector('.popup__image');
   const caption = popupImage.querySelector('.popup__caption');
   image.src = evt.target.src;
