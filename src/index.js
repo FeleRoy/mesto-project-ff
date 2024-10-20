@@ -51,12 +51,12 @@ popupImageButtonClose.addEventListener('click', function(){
 });
 
 //обработка форм
-formEdit.addEventListener('submit', editProfileFormSubmit);
+formEdit.addEventListener('submit', handleFormProfileEdit);
 formNewCard.addEventListener('submit', handleFormNewCard);
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
-function editProfileFormSubmit(evt) {
+function handleFormProfileEdit(evt) {
     evt.preventDefault(); 
     profileTitle.textContent = formEdit.name.value;
     profileDescription.textContent = formEdit.description.value;
