@@ -1,6 +1,6 @@
 import { closeModal } from "./modal";
 import { profileTitle,  profileDescription, popupEdit, formEdit, popupNewCard, formNewCard} from "../..";
-import { createCard, addNewCard, deleteCard, likeCard } from "./cards";
+import { createCard, addNewCard, deleteCard, likeCard, handleImageClick } from "./cards";
 
 
 // Обработчик «отправки» формы, хотя пока
@@ -12,10 +12,11 @@ export function handleFormSubmit(evt) {
     closeModal(popupEdit);
 }
 
+//Обработчик создания новой карточки
 export function handleFormNewCard(evt){
     evt.preventDefault();
     const newCardInfo = {name: formNewCard['place-name'].value, link: formNewCard.link.value};
-    const newCard = createCard(newCardInfo, deleteCard, likeCard);
+    const newCard = createCard(newCardInfo, deleteCard, likeCard, handleImageClick);
     addNewCard(newCard);
     formNewCard['place-name'].value = '';
     formNewCard.link.value = '';
