@@ -1,6 +1,7 @@
 import './pages/index.css'; 
-import { displayCards, createCard, addNewCard, deleteCard, likeCard, handleImageClick } from './scripts/components/card';
-import { openModal, closeModal, closeByEsc, closeByOverlay } from './scripts/components/modal';
+import {initialCards} from './scripts/components/cards'
+import { createCard, deleteCard, likeCard} from './scripts/components/card';
+import { openModal, closeModal} from './scripts/components/modal';
 
 //данные профиля
 export const profileTitle = document.querySelector('.profile__title');
@@ -20,6 +21,12 @@ const profileAddButtonOpen = document.querySelector('.profile__add-button');
 const profileEditButtonClose = popupEdit.querySelector('.popup__close');
 const profileAddButtonClose = popupNewCard.querySelector('.popup__close');
 const popupImageButtonClose = popupImage.querySelector('.popup__close');
+
+// @todo: Темплейт карточки
+const cardTemplate = document.querySelector('#card-template').content;
+
+// @todo: DOM узлы
+const cardContainer = document.querySelector('.places__list');
 
 //отображение карточек
 displayCards();
@@ -65,4 +72,26 @@ function handleFormNewCard(evt){
     formNewCard['place-name'].value = '';
     formNewCard.link.value = '';
     closeModal(popupNewCard);
+}
+
+
+function addNewCard(card){
+    cardContainer.prepend(card);
+}
+  
+
+function handleImageClick(evt){
+    const image = popupImage.querySelector('.popup__image');
+    const caption = popupImage.querySelector('.popup__caption');
+    image.src = evt.target.src;
+    image.alt = evt.target.alt;
+    caption.textContent = evt.target.parentElement.querySelector(".card__title").textContent;
+    openModal(popupImage);
+}
+  
+  // @todo: Вывести карточки на страницу
+function displayCards(){
+    initialCards.forEach(function (item) {
+        cardContainer.append(createCard(item, deleteCard, likeCard, handleImageClick));
+    })
 }
