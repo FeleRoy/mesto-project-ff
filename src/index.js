@@ -29,28 +29,18 @@ profileEditButtonOpen.addEventListener('click', function(){
     formEdit.name.value = profileTitle.textContent;
     formEdit.description.value = profileDescription.textContent;
     openModal(popupEdit);
-    document.addEventListener('keydown', closeByEsc);
-    document.addEventListener('click', closeByOverlay);
 });
 profileAddButtonOpen.addEventListener('click', function(){
     openModal(popupNewCard);
-    document.addEventListener('keydown', closeByEsc);
-    document.addEventListener('click', closeByOverlay);
 });
 profileEditButtonClose.addEventListener('click', function(){
     closeModal(popupEdit);
-    document.removeEventListener('keydown', closeByEsc);
-    document.removeEventListener('click', closeByOverlay);
 });
 profileAddButtonClose.addEventListener('click', function(){
     closeModal(popupNewCard);
-    document.removeEventListener('keydown', closeByEsc);
-    document.removeEventListener('click', closeByOverlay);
 });
 popupImageButtonClose.addEventListener('click', function(){
     closeModal(popupImage);
-    document.removeEventListener('keydown', closeByEsc);
-    document.removeEventListener('click', closeByOverlay);
 });
 
 //обработка форм
