@@ -11,10 +11,12 @@ export function closeByEsc(evt){
     if (evt.key === "Escape"){
         closeModal(popup);
     }
+    evt.target.removeEventListener('keydown', closeByEsc);
 }
 
 export function closeByOverlay(evt){
     if(evt.target.classList.contains('popup')) {
         closeModal(evt.target);
     }
+    evt.target.removeEventListener('click', closeByOverlay);
 }
