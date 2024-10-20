@@ -5,7 +5,7 @@ import { createCard, addNewCard, deleteCard, likeCard, handleImageClick } from "
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
-export function handleFormSubmit(evt) {
+export function editProfileFormSubmit(evt) {
     evt.preventDefault(); 
     profileTitle.textContent = formEdit.name.value;
     profileDescription.textContent = formEdit.description.value;

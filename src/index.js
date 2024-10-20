@@ -1,7 +1,7 @@
 import './pages/index.css'; 
 import { displayCards } from './scripts/components/card';
 import { openModal, closeModal, closeByEsc, closeByOverlay } from './scripts/components/modal';
-import { handleFormSubmit, handleFormNewCard } from './scripts/components/form';
+import { editProfileFormSubmit, handleFormNewCard } from './scripts/components/form';
 
 //данные профиля
 export const profileTitle = document.querySelector('.profile__title');
@@ -55,5 +55,5 @@ popupImageButtonClose.addEventListener('click', function(){
 });
 
 //обработка форм
-formEdit.addEventListener('submit', handleFormSubmit);
+formEdit.addEventListener('submit', editProfileFormSubmit);
 formNewCard.addEventListener('submit', handleFormNewCard);
