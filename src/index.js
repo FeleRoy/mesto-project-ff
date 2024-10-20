@@ -1,5 +1,5 @@
 import './pages/index.css'; 
-import { displayCards } from './scripts/components/cards';
+import { displayCards } from './scripts/components/card';
 import { openModal, closeModal, closeByEsc, closeByOverlay } from './scripts/components/modal';
 import { handleFormSubmit, handleFormNewCard } from './scripts/components/form';
 

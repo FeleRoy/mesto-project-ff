@@ -1,6 +1,6 @@
 import { closeModal } from "./modal";
 import { profileTitle,  profileDescription, popupEdit, formEdit, popupNewCard, formNewCard} from "../..";
-import { createCard, addNewCard, deleteCard, likeCard, handleImageClick } from "./cards";
+import { createCard, addNewCard, deleteCard, likeCard, handleImageClick } from "./card";
 
 
 // Обработчик «отправки» формы, хотя пока
