@@ -2,6 +2,7 @@ import './pages/index.css';
 import {initialCards} from './scripts/components/cards'
 import { createCard, deleteCard, likeCard} from './scripts/components/card';
 import { openModal, closeModal} from './scripts/components/modal';
+import { enableValidation, clearValidation, settings } from './scripts/components/validation';
 
 //данные профиля
 const profileTitle = document.querySelector('.profile__title');
@@ -43,6 +44,7 @@ function handleFormNewCard(evt){
     formNewCard['place-name'].value = '';
     formNewCard.link.value = '';
     closeModal(popupNewCard);
+    clearValidation(formNewCard, settings);
 }
 
 function addNewCard(card){
@@ -70,6 +72,7 @@ displayCards();
 profileEditButtonOpen.addEventListener('click', function(){
     formEdit.name.value = profileTitle.textContent;
     formEdit.description.value = profileDescription.textContent;
+    clearValidation(formEdit, settings);
     openModal(popupEdit);
 });
 profileAddButtonOpen.addEventListener('click', function(){
@@ -88,3 +91,5 @@ popupImageButtonClose.addEventListener('click', function(){
 //обработка форм
 formEdit.addEventListener('submit', handleFormProfileEdit);
 formNewCard.addEventListener('submit', handleFormNewCard);
+
+enableValidation(settings);
