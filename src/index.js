@@ -18,6 +18,8 @@ const image = popupImage.querySelector('.popup__image');
 const caption = popupImage.querySelector('.popup__caption');
 const formEdit = popupEdit.querySelector('form');
 const formNewCard = popupNewCard.querySelector('form');
+const popupAvatar = document.querySelector('.popup_type_avatar');
+const formAvatar = popupAvatar.querySelector('form');
 
 // кнопки
 const profileEditButtonOpen = document.querySelector('.profile__edit-button');
@@ -25,8 +27,14 @@ const profileAddButtonOpen = document.querySelector('.profile__add-button');
 const profileEditButtonClose = popupEdit.querySelector('.popup__close');
 const profileAddButtonClose = popupNewCard.querySelector('.popup__close');
 const popupImageButtonClose = popupImage.querySelector('.popup__close');
+const popupAvatarClose = popupAvatar.querySelector('.popup__close');
 
 const cardContainer = document.querySelector('.places__list');
+
+function renderLoading(isLoading, popup) {
+    const submitButton = popup.querySelector(".popup__button");
+    submitButton.textContent = isLoading ? "Сохранение..." : "Сохранить";
+}
 
 function displayPageInfo() {
     Promise.all([API.getUserInfo(), API.getAllCards()]).then(([userData, cardsData]) => {
@@ -34,10 +42,8 @@ function displayPageInfo() {
         profileDescription.textContent = userData.about;
         profileImage.style.backgroundImage = `url(${userData.avatar})`
         const userId = userData['_id'];
-
-        console.log(cardsData);
         cardsData.forEach((item)=>{
-            cardContainer.append(createCard({name: item.name, link: item.link, likes: item.likes.length, cardOwnerID: item.owner['_id'], cardID: item._id}, API, likeCard, handleImageClick, userId));
+            cardContainer.append(createCard(item, API, handleImageClick, userId));
         })
     }).catch((err) => {
         console.log(err); // выводим ошибку в консоль
@@ -47,11 +53,14 @@ function displayPageInfo() {
 // Обработчик «отправки» формы, 
 function handleFormProfileEdit(evt) {
     evt.preventDefault(); 
+    renderLoading(true, popupEdit);
     API.editUserInfo(formEdit.name.value, formEdit.description.value ).then((data)=>{
-        profileTitle.textContent = data.name;
-        profileDescription.textContent = data.about;
+        profileTitle.textContent = formEdit.name.value;
+        profileDescription.textContent = formEdit.description.value;
     }).catch((err) => {
         console.log(err); // выводим ошибку в консоль
+    }).finally(() => {
+        renderLoading(false, popupEdit);
     }); 
 
     closeModal(popupEdit);
@@ -62,11 +71,14 @@ function handleFormNewCard(evt){
     evt.preventDefault();
     const newCardInfo = {name: formNewCard['place-name'].value, link: formNewCard.link.value};
     const newCard = createCard(newCardInfo, deleteCard, likeCard, handleImageClick);
+    renderLoading(true, popupNewCard);
     API.addNewCard(newCardInfo).then((data)=> {
         console.log(data);
         addNewCard(newCard);
     }).catch((err) => {
         console.log(err); // выводим ошибку в консоль
+    }).finally(() => {
+        renderLoading(false, popupNewCard);
     }); 
     formNewCard['place-name'].value = '';
     formNewCard.link.value = '';
@@ -83,6 +95,19 @@ function handleImageClick(evt){
     image.alt = evt.target.alt;
     caption.textContent = evt.target.parentElement.querySelector(".card__title").textContent;
     openModal(popupImage);
+}
+
+function handleFormAvatar(evt) {
+    evt.preventDefault();
+    renderLoading(true, popupAvatar);
+    API.editUserImage(formAvatar.avatar.value).then((data)=>{
+        profileImage.style.backgroundImage = `url(${formAvatar.avatar.value})`
+        closeModal(popupAvatar);
+    }).catch((err) => {
+        console.log(err); // выводим ошибку в консоль
+    }).finally(() => {
+        renderLoading(false, popupAvatar);
+    }); 
 }
   
 displayPageInfo();
@@ -107,9 +132,18 @@ popupImageButtonClose.addEventListener('click', function(){
     closeModal(popupImage);
 });
 
+profileImage.addEventListener('click', function(){
+    openModal(popupAvatar);
+});
+
+popupAvatarClose.addEventListener('click', function(){
+    closeModal(popupAvatar);
+});
+
 //обработка форм
 formEdit.addEventListener('submit', handleFormProfileEdit);
 formNewCard.addEventListener('submit', handleFormNewCard);
+formAvatar.addEventListener('submit', handleFormAvatar);
 
 enableValidation(settings);
 
