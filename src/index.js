@@ -28,7 +28,6 @@ const popupImageButtonClose = popupImage.querySelector('.popup__close');
 
 const cardContainer = document.querySelector('.places__list');
 
-
 function displayPageInfo() {
     Promise.all([API.getUserInfo(), API.getAllCards()]).then(([userData, cardsData]) => {
         profileTitle.textContent = userData.name;
@@ -38,7 +37,7 @@ function displayPageInfo() {
 
         console.log(cardsData);
         cardsData.forEach((item)=>{
-            cardContainer.append(createCard({name: item.name, link: item.link}, deleteCard, likeCard, handleImageClick));
+            cardContainer.append(createCard({name: item.name, link: item.link, likes: item.likes.length, cardOwnerID: item.owner['_id'], cardID: item._id}, API, likeCard, handleImageClick, userId));
         })
     }).catch((err) => {
         console.log(err); // выводим ошибку в консоль
@@ -63,7 +62,12 @@ function handleFormNewCard(evt){
     evt.preventDefault();
     const newCardInfo = {name: formNewCard['place-name'].value, link: formNewCard.link.value};
     const newCard = createCard(newCardInfo, deleteCard, likeCard, handleImageClick);
-    addNewCard(newCard);
+    API.addNewCard(newCardInfo).then((data)=> {
+        console.log(data);
+        addNewCard(newCard);
+    }).catch((err) => {
+        console.log(err); // выводим ошибку в консоль
+    }); 
     formNewCard['place-name'].value = '';
     formNewCard.link.value = '';
     closeModal(popupNewCard);
