@@ -83,7 +83,6 @@ function handleFormNewCard(evt){
     renderLoading(true, popupNewCard);
     const newCardInfo = {name: formNewCard['place-name'].value, link: formNewCard.link.value}; 
     API.addNewCard(newCardInfo).then((data)=> {
-        console.log(data);
         const newCard =createCard(data, userId, handleImageClick, handleLikeToggle, handleDeleteCard, API.deleteCard, API.addLikeCard, API.deleteLikeCard);
         addNewCard(newCard);
     }).catch((err) => {
