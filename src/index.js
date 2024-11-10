@@ -1,6 +1,6 @@
 import './pages/index.css'; 
 import {initialCards} from './scripts/components/cards'
-import { createCard, deleteCard, likeCard} from './scripts/components/card';
+import { createCard, handleLikeToggle, handleDeleteCard} from './scripts/components/card';
 import { openModal, closeModal} from './scripts/components/modal';
 import { enableValidation, clearValidation } from './scripts/components/validation';
 import * as API from './scripts/components/api';
@@ -40,6 +40,8 @@ const popupAvatarClose = popupAvatar.querySelector('.popup__close');
 
 const cardContainer = document.querySelector('.places__list');
 
+let userId;
+
 function renderLoading(isLoading, popup) {
     const submitButton = popup.querySelector(".popup__button");
     submitButton.textContent = isLoading ? "Сохранение..." : "Сохранить";
@@ -50,9 +52,9 @@ function displayPageInfo() {
         profileTitle.textContent = userData.name;
         profileDescription.textContent = userData.about;
         profileImage.style.backgroundImage = `url(${userData.avatar})`
-        const userId = userData['_id'];
+        userId = userData['_id'];
         cardsData.forEach((item)=>{
-            cardContainer.append(createCard(item, API, handleImageClick, userId));
+            cardContainer.append(createCard(item, userId, handleImageClick, handleLikeToggle, handleDeleteCard, API.deleteCard, API.addLikeCard, API.deleteLikeCard));
         })
     }).catch((err) => {
         console.log(err); // выводим ошибку в консоль
@@ -64,8 +66,8 @@ function handleFormProfileEdit(evt) {
     evt.preventDefault(); 
     renderLoading(true, popupEdit);
     API.editUserInfo(formEdit.name.value, formEdit.description.value ).then((data)=>{
-        profileTitle.textContent = formEdit.name.value;
-        profileDescription.textContent = formEdit.description.value;
+        profileTitle.textContent = data.name;
+        profileDescription.textContent = data.about;
     }).catch((err) => {
         console.log(err); // выводим ошибку в консоль
     }).finally(() => {
@@ -78,11 +80,11 @@ function handleFormProfileEdit(evt) {
 //Обработчик создания новой карточки
 function handleFormNewCard(evt){
     evt.preventDefault();
-    const newCardInfo = {name: formNewCard['place-name'].value, link: formNewCard.link.value};
-    const newCard = createCard(newCardInfo, deleteCard, likeCard, handleImageClick);
     renderLoading(true, popupNewCard);
+    const newCardInfo = {name: formNewCard['place-name'].value, link: formNewCard.link.value}; 
     API.addNewCard(newCardInfo).then((data)=> {
         console.log(data);
+        const newCard =createCard(data, userId, handleImageClick, handleLikeToggle, handleDeleteCard, API.deleteCard, API.addLikeCard, API.deleteLikeCard);
         addNewCard(newCard);
     }).catch((err) => {
         console.log(err); // выводим ошибку в консоль
@@ -110,7 +112,7 @@ function handleFormAvatar(evt) {
     evt.preventDefault();
     renderLoading(true, popupAvatar);
     API.editUserImage(formAvatar.avatar.value).then((data)=>{
-        profileImage.style.backgroundImage = `url(${formAvatar.avatar.value})`
+        profileImage.style.backgroundImage = `url(${data.avatar})`
         closeModal(popupAvatar);
     }).catch((err) => {
         console.log(err); // выводим ошибку в консоль
