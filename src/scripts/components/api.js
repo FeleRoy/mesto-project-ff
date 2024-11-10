@@ -36,7 +36,7 @@ export const editUserInfo = (name, about) => {
             name: name,
             about: about
         })
-    })
+    }).then(handleResponse);
 }
 
 export const addNewCard = (newCardData) => {
@@ -47,28 +47,28 @@ export const addNewCard = (newCardData) => {
            name: newCardData.name,
            link: newCardData.link 
         })
-    })
+    }).then(handleResponse);
 }
 
 export const deleteCard = (cardId) => {
     return fetch(`${config.baseUrl}/cards/${cardId}`,{
         method: "DELETE",
         headers: config.headers,
-    })
+    }).then(handleResponse);
 }
 
 export const addLikeCard = (cardId) => {
     return fetch(`${config.baseUrl}/cards/likes/${cardId}`,{
         method: "PUT",
         headers: config.headers,
-    })
+    }).then(handleResponse);
 }
 
 export const deleteLikeCard = (cardId) => {
     return fetch(`${config.baseUrl}/cards/likes/${cardId}`,{
         method: "DELETE",
         headers: config.headers,
-    })
+    }).then(handleResponse);
 }
 
 export const editUserImage = (link) => {
@@ -78,5 +78,5 @@ export const editUserImage = (link) => {
         body: JSON.stringify({
             avatar: link
         })
-    })
+    }).then(handleResponse);
 }
