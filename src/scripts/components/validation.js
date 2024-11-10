@@ -1,11 +1,3 @@
-export const settings = {
-  formSelector: ".popup__form",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__button",
-  inactiveButtonClass: "popup__button_disabled",
-  inputErrorClass: "popup__input_type_error",
-  errorClass: "popup__error_visible",
-};
 
 const hasInvalidInput = (inputList) => {
     return inputList.some((inputElement) => {
@@ -33,7 +25,7 @@ const showInputError = (formElement, inputElement, errorMessage, settings) => {
 };
 
 // Функция, которая удаляет класс с ошибкой
-const hideInputError = (formElement, inputElement) => {
+const hideInputError = (formElement, inputElement, settings) => {
   const errorElement = formElement.querySelector(`.${inputElement.name}-error`);
   inputElement.classList.remove(settings.inputErrorClass);
   errorElement.classList.remove(settings.errorClass);
@@ -56,7 +48,7 @@ const isValid = (formElement, inputElement, settings) => {
       settings
     );
   } else {
-    hideInputError(formElement, inputElement);
+    hideInputError(formElement, inputElement, settings);
   }
 };
 
@@ -89,6 +81,6 @@ export const clearValidation = (formElement, settings) => {
   submitButton.disabled = true;
   submitButton.classList.add(settings.inactiveButtonClass);
   inputList.forEach((inputElement) => {
-    hideInputError(formElement, inputElement)
+    hideInputError(formElement, inputElement, settings)
   });
 };

@@ -2,8 +2,17 @@ import './pages/index.css';
 import {initialCards} from './scripts/components/cards'
 import { createCard, deleteCard, likeCard} from './scripts/components/card';
 import { openModal, closeModal} from './scripts/components/modal';
-import { enableValidation, clearValidation, settings } from './scripts/components/validation';
+import { enableValidation, clearValidation } from './scripts/components/validation';
 import * as API from './scripts/components/api';
+
+const settings = {
+    formSelector: ".popup__form",
+    inputSelector: ".popup__input",
+    submitButtonSelector: ".popup__button",
+    inactiveButtonClass: "popup__button_disabled",
+    inputErrorClass: "popup__input_type_error",
+    errorClass: "popup__error_visible",
+  };
 
 //данные профиля
 const profileTitle = document.querySelector('.profile__title');
