@@ -16,7 +16,8 @@
 * Ссылка на лайв сервер с моим аккаунтом: [GitHub Pages](https://feleroy.github.io/mesto-project-ff/).
 
 ## Скриншот
-![image](https://github.com/user-attachments/assets/3dde49e6-f135-4c3a-a162-eca3d88eb11e)
+<img width="1920" height="953" alt="image" src="https://github.com/user-attachments/assets/822082e7-310c-48ed-a5e5-366dcd0f8d00" />
+
 
 ## Что реализовано
 * Отображение карточек с фотографиями и подписями.
